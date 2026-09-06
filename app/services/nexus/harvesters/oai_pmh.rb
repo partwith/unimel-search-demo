@@ -24,6 +24,11 @@ module Nexus
         @client.list_identifiers(opts).full.select(&:deleted?).map(&:identifier)
       end
 
+      def all_ids
+        opts = { metadata_prefix: @prefix, set: @set, until: @until }
+        @client.list_identifiers(opts).full.reject(&:deleted?).map(&:identifier)
+      end
+
       attr_reader :until
 
       private

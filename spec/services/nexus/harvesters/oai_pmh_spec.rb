@@ -67,4 +67,25 @@ RSpec.describe Nexus::Harvesters::OaiPmh do
     expect(yielded.size).to eq(1)
     expect(yielded.first.id).to eq("oai:grainger.unimelb.edu.au:GM-0417")
   end
+
+  # ListIdentifiers responses expose bare <header> elements as direct children
+  # of <ListIdentifiers>, unlike ListRecords which wraps each <header> in a
+  # <record>. So reusing page1/page2 needs both the container tag renamed and
+  # the <record> wrapper stripped (a plain single `sub` of "ListRecords" would
+  # only hit the `verb="ListRecords"` attribute, since that text appears
+  # earlier in the document than the actual <ListRecords> element).
+  def as_list_identifiers(xml)
+    xml.gsub("<ListRecords>", "<ListIdentifiers>")
+       .gsub("</ListRecords>", "</ListIdentifiers>")
+       .gsub(%r{</?record>\n?}, "")
+  end
+
+  it "lists all non-deleted identifiers across pages for a full sweep" do
+    stub_request(:get, /upstream\.test\/oai/).with(query: hash_including(verb: "ListIdentifiers")).to_return(
+      { body: as_list_identifiers(page1).sub(%r{<metadata>.*</metadata>\n}m, ""), headers: { "Content-Type" => "text/xml" } },
+      { body: as_list_identifiers(page2), headers: { "Content-Type" => "text/xml" } }
+    )
+
+    expect(harvester.all_ids).to eq(["oai:grainger.unimelb.edu.au:GM-0417"])
+  end
 end

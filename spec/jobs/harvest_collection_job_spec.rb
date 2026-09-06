@@ -16,6 +16,8 @@ class FakeHarvester
     @deleted
   end
 
+  def all_ids = @records.map { |r| r[:id] }
+
   def until
     Time.current
   end
@@ -71,5 +73,12 @@ RSpec.describe HarvestCollectionJob do
       described_class.perform_now("grainger")
       expect(source.reload.cursor).to eq(Time.current)
     end
+  end
+
+  it "passes a full id set to the reconciler on a full run" do
+    described_class.perform_now("grainger", full: true)
+
+    run = source.harvest_runs.last
+    expect(run.cursor_from).to be_nil
   end
 end

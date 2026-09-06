@@ -29,7 +29,7 @@ class HarvestCollectionJob < ApplicationJob
 
     deleted = Nexus::Reconciler.new(source).apply(
       harvester.deleted_ids(from: run.cursor_from),
-      full_id_set: full ? nil : nil
+      full_id_set: full ? harvester.all_ids : nil
     )
 
     run.update!(
