@@ -1,0 +1,12 @@
+load_defaults: 9.1.0
+development:
+  adapter: solr
+  url: <%= ENV.fetch("SOLR_URL", "http://localhost:8983/solr/nexus") %>
+
+test:
+  adapter: solr
+  url: <%= ENV.fetch("SOLR_URL", "http://localhost:8983/solr/nexus") %>
+
+production:
+  adapter: solr
+  url: <%= ENV.fetch("SOLR_URL", "http://localhost:8983/solr/nexus") %>
