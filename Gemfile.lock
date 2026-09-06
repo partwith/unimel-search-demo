@@ -455,6 +455,7 @@ DEPENDENCIES
   blacklight_range_limit (~> 9.2)
   bootsnap
   brakeman
+  builder (~> 3.3)
   debug
   importmap-rails
   jbuilder

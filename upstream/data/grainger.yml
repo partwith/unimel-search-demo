@@ -1,0 +1,64 @@
+- id: GM-0417
+  title: "Free Music Machine, model 2"
+  creator: ["Grainger, Percy", "Cross, Burnett"]
+  date: "1950-1952"
+  type: "Musical instrument"
+  subject: ["Experimental music", "Sound technology"]
+  coverage: "White Plains, New York"
+  description: "Second working model of Grainger's Free Music Machine, built with Burnett Cross to play gliding tones without human performers."
+  rights: "In copyright - research use"
+  identifier: "https://grainger.unimelb.edu.au/collection/GM-0417"
+  updated_at: 2026-09-01T00:00:00Z
+  deleted: false
+- id: GM-1102
+  title: "Towelling costume, self-designed"
+  creator: ["Grainger, Percy"]
+  date: "c. 1930s"
+  type: "Costume"
+  subject: ["Costume", "Design"]
+  coverage: "White Plains, New York"
+  description: "Jacket and trousers made from bath towels, designed and worn by Grainger."
+  rights: "In copyright - research use"
+  identifier: "https://grainger.unimelb.edu.au/collection/GM-1102"
+  updated_at: 2026-09-01T00:00:00Z
+  deleted: false
+- id: GM-0088
+  title: "Letter to Rose Grainger from London"
+  creator: ["Grainger, Percy"]
+  date: "1902"
+  type: "Correspondence"
+  subject: []
+  coverage: "London"
+  description: "Letter from Percy Grainger to his mother Rose, written while touring London."
+  rights: "Public domain"
+  identifier: "https://grainger.unimelb.edu.au/collection/GM-0088"
+  updated_at: 2026-09-01T00:00:00Z
+  deleted: false
+- id: GM-2201
+  title: "Phonograph cylinder: Lincolnshire folk song recording"
+  creator: ["Grainger, Percy (collector)"]
+  date: "1906"
+  type: "Sound recording"
+  subject: ["Folk music"]
+  coverage: "Brigg, Lincolnshire"
+  description: "Wax cylinder recording made by Grainger during his folk song collecting expeditions in Lincolnshire."
+  rights: "Public domain"
+  identifier: "https://grainger.unimelb.edu.au/collection/GM-2201"
+  updated_at: 2026-09-01T00:00:00Z
+  deleted: false
+- id: GM-1540
+  title: "Portrait of Percy Grainger"
+  creator: ["Rupert Bunny (attrib.)"]
+  date: "1911"
+  type: "Painting"
+  subject: ["Portraiture"]
+  coverage: "Paris"
+  description: "Oil portrait of Percy Grainger, attributed to Rupert Bunny."
+  rights: "Public domain"
+  identifier: "https://grainger.unimelb.edu.au/collection/GM-1540"
+  updated_at: 2026-09-01T00:00:00Z
+  deleted: false
+- id: GM-9999
+  title: null
+  updated_at: 2026-09-05T11:00:00Z
+  deleted: true

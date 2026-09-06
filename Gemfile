@@ -70,3 +70,5 @@ gem "rack-test", "~> 2.2", groups: [:development, :test]
 group :development, :test do
   gem "solr_wrapper", ">= 0.3"
 end
+
+gem "builder", "~> 3.3"
