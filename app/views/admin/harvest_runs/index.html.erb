@@ -1,0 +1,21 @@
+<h1>Harvest Runs</h1>
+<table>
+  <thead><tr><th>Collection</th><th>Status</th><th>Fetched</th><th>Indexed</th><th>Deleted</th><th>Mapping errors</th><th>Started</th></tr></thead>
+  <tbody>
+    <% @runs.each do |run| %>
+      <tr>
+        <td><%= run.collection_source.key %></td>
+        <td><%= run.status %></td>
+        <td><%= run.fetched %></td>
+        <td><%= run.indexed %></td>
+        <td><%= run.deleted %></td>
+        <td><%= run.mapping_errors %></td>
+        <td><%= run.started_at %></td>
+      </tr>
+      <% run.error_samples.each do |sample| %>
+        <tr><td colspan="6"><em><%= sample["id"] %>: <%= sample["message"] %></em></td></tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+<p><%= link_to "Back", admin_collection_sources_path %></p>

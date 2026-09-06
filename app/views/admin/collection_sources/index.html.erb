@@ -1,0 +1,18 @@
+<h1>Collection Sources</h1>
+<table>
+  <thead><tr><th>Key</th><th>Name</th><th>Cursor</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% @sources.each do |source| %>
+      <tr>
+        <td><%= source.key %></td>
+        <td><%= source.name %></td>
+        <td><%= source.cursor %></td>
+        <td>
+          <%= button_to "Harvest now", harvest_admin_collection_source_path(source), method: :post %>
+          <%= button_to "Full re-index", full_reindex_admin_collection_source_path(source), method: :post %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<p><%= link_to "Harvest runs", admin_harvest_runs_path %> | <%= link_to "Upstream records", admin_upstream_records_path %></p>

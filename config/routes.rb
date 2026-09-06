@@ -1,4 +1,17 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    root to: "collection_sources#index"
+
+    resources :collection_sources, only: [:index] do
+      member do
+        post :harvest
+        post :full_reindex
+      end
+    end
+    resources :harvest_runs, only: [:index]
+    resources :upstream_records, only: [:index, :update]
+  end
+
   mount Blacklight::Engine => '/'
   root to: "catalog#index"
   concern :searchable, Blacklight::Routes::Searchable.new
