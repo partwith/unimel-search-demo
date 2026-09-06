@@ -1,0 +1,70 @@
+require "rails_helper"
+require "webmock/rspec"
+
+RSpec.describe Nexus::Harvesters::OaiPmh do
+  let(:source) do
+    CollectionSource.new(
+      config: { "base_url" => "http://upstream.test/oai", "set" => "grainger", "metadata_prefix" => "oai_dc" }
+    )
+  end
+  let(:harvester) { described_class.new(source) }
+
+  let(:page1) do
+    <<~XML
+      <?xml version="1.0" encoding="UTF-8"?>
+      <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
+        <responseDate>2026-09-06T04:00:00Z</responseDate>
+        <request verb="ListRecords">http://upstream.test/oai</request>
+        <ListRecords>
+          <record>
+            <header>
+              <identifier>oai:grainger.unimelb.edu.au:GM-0417</identifier>
+              <datestamp>2026-09-05T10:12:00Z</datestamp>
+              <setSpec>grainger</setSpec>
+            </header>
+            <metadata>
+              <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+                <dc:title>Free Music Machine, model 2</dc:title>
+              </oai_dc:dc>
+            </metadata>
+          </record>
+          <resumptionToken completeListSize="2" cursor="0">page-2</resumptionToken>
+        </ListRecords>
+      </OAI-PMH>
+    XML
+  end
+
+  let(:page2) do
+    <<~XML
+      <?xml version="1.0" encoding="UTF-8"?>
+      <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
+        <responseDate>2026-09-06T04:00:01Z</responseDate>
+        <request verb="ListRecords">http://upstream.test/oai</request>
+        <ListRecords>
+          <record>
+            <header status="deleted">
+              <identifier>oai:grainger.unimelb.edu.au:GM-9999</identifier>
+              <datestamp>2026-09-05T11:00:00Z</datestamp>
+            </header>
+          </record>
+          <resumptionToken completeListSize="2" cursor="1"></resumptionToken>
+        </ListRecords>
+      </OAI-PMH>
+    XML
+  end
+
+  before do
+    stub_request(:get, /upstream\.test\/oai/).with(query: hash_including(verb: "ListRecords")).to_return(
+      { body: page1, headers: { "Content-Type" => "text/xml" } },
+      { body: page2, headers: { "Content-Type" => "text/xml" } }
+    )
+  end
+
+  it "follows the resumptionToken and yields only non-deleted records" do
+    yielded = []
+    harvester.each(from: nil) { |raw| yielded << raw }
+
+    expect(yielded.size).to eq(1)
+    expect(yielded.first.id).to eq("oai:grainger.unimelb.edu.au:GM-0417")
+  end
+end
