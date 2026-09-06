@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_06_110027) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_06_115138) do
   create_table "bookmarks", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "user_type"
@@ -23,6 +23,36 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_06_110027) do
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
+  create_table "collection_sources", force: :cascade do |t|
+    t.string "key"
+    t.string "name"
+    t.string "harvester"
+    t.text "config", default: "{}"
+    t.string "mapper"
+    t.datetime "cursor"
+    t.string "schedule"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_collection_sources_on_key", unique: true
+  end
+
+  create_table "harvest_runs", force: :cascade do |t|
+    t.integer "collection_source_id", null: false
+    t.datetime "started_at"
+    t.datetime "finished_at"
+    t.string "status", default: "running", null: false
+    t.integer "fetched", default: 0, null: false
+    t.integer "indexed", default: 0, null: false
+    t.integer "deleted", default: 0, null: false
+    t.integer "mapping_errors", default: 0, null: false
+    t.text "error_samples", default: "[]"
+    t.datetime "cursor_from"
+    t.datetime "cursor_until"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["collection_source_id"], name: "index_harvest_runs_on_collection_source_id"
+  end
+
   create_table "searches", force: :cascade do |t|
     t.binary "query_params"
     t.integer "user_id"
@@ -31,4 +61,6 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_06_110027) do
     t.datetime "updated_at", precision: nil, null: false
     t.index ["user_id"], name: "index_searches_on_user_id"
   end
+
+  add_foreign_key "harvest_runs", "collection_sources"
 end
