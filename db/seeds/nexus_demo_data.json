@@ -1,0 +1,653 @@
+[
+  {
+    "id": "rarebooks:RB-99120001",
+    "collection_ssim": [
+      "Rare Books, Baillieu Library"
+    ],
+    "format_ssim": [
+      "Book"
+    ],
+    "title_tesim": [
+      "Waverley; or, 'Tis sixty years since"
+    ],
+    "creator_tesim": [
+      "Scott, Walter"
+    ],
+    "creator_ssim": [
+      "Scott, Walter"
+    ],
+    "date_ssim": [
+      "1814"
+    ],
+    "date_start_isi": 1814,
+    "date_end_isi": 1814,
+    "subject_ssim": [
+      "Scottish fiction",
+      "Historical fiction"
+    ],
+    "place_ssim": [
+      "Edinburgh"
+    ],
+    "publisher_ssim": [
+      "Archibald Constable and Co."
+    ],
+    "description_tesim": [
+      "First edition, three volumes. Part of the Walter Scott collection."
+    ],
+    "rights_ssim": [
+      "Public domain"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=RB-99120001",
+    "source_url_ss": "https://cat.lib.unimelb.edu.au/record/99120001",
+    "source_system_ss": "Library catalogue MARC (sample)",
+    "source_record_ss": "{\"mms_id\":\"99120001\",\"245a\":\"Waverley; or, 'Tis sixty years since\",\"100a\":\"Scott, Walter\",\"264a\":\"Edinburgh\",\"264b\":\"Archibald Constable and Co.\",\"264c\":\"1814\",\"650a\":[\"Scottish fiction\",\"Historical fiction\"]}"
+  },
+  {
+    "id": "rarebooks:RB-99120002",
+    "collection_ssim": [
+      "Rare Books, Baillieu Library"
+    ],
+    "format_ssim": [
+      "Book"
+    ],
+    "title_tesim": [
+      "A voyage to Terra Australis"
+    ],
+    "creator_tesim": [
+      "Flinders, Matthew"
+    ],
+    "creator_ssim": [
+      "Flinders, Matthew"
+    ],
+    "date_ssim": [
+      "1814"
+    ],
+    "date_start_isi": 1814,
+    "date_end_isi": 1814,
+    "subject_ssim": [
+      "Exploration",
+      "Australia - Discovery and exploration",
+      "Cartography"
+    ],
+    "place_ssim": [
+      "London"
+    ],
+    "publisher_ssim": [
+      "G. and W. Nicol"
+    ],
+    "description_tesim": [
+      "Account of the circumnavigation of Australia, with atlas. Australiana collection."
+    ],
+    "rights_ssim": [
+      "Public domain"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=RB-99120002",
+    "source_url_ss": "https://cat.lib.unimelb.edu.au/record/99120002",
+    "source_system_ss": "Library catalogue MARC (sample)",
+    "source_record_ss": "{\"mms_id\":\"99120002\",\"245a\":\"A voyage to Terra Australis\",\"100a\":\"Flinders, Matthew\",\"264a\":\"London\",\"264b\":\"G. and W. Nicol\",\"264c\":\"1814\"}"
+  },
+  {
+    "id": "rarebooks:RB-99120003",
+    "collection_ssim": [
+      "Rare Books, Baillieu Library"
+    ],
+    "format_ssim": [
+      "Periodical"
+    ],
+    "title_tesim": [
+      "The Melbourne Punch, vol. 1"
+    ],
+    "creator_tesim": [
+      "Sinnett, Frederick (editor)"
+    ],
+    "creator_ssim": [
+      "Sinnett, Frederick"
+    ],
+    "date_ssim": [
+      "1855"
+    ],
+    "date_start_isi": 1855,
+    "date_end_isi": 1855,
+    "subject_ssim": [
+      "Satire",
+      "Melbourne - Social life and customs",
+      "Gold rush"
+    ],
+    "place_ssim": [
+      "Melbourne"
+    ],
+    "publisher_ssim": [
+      "Edgar Ray and Frederick Sinnett"
+    ],
+    "description_tesim": [
+      "Bound first volume of the satirical weekly, gold-rush era Melbourne."
+    ],
+    "rights_ssim": [
+      "Public domain"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=RB-99120003",
+    "source_url_ss": "https://cat.lib.unimelb.edu.au/record/99120003",
+    "source_system_ss": "Library catalogue MARC (sample)",
+    "source_record_ss": "{\"mms_id\":\"99120003\",\"245a\":\"The Melbourne Punch\",\"264a\":\"Melbourne\",\"264c\":\"1855\"}"
+  },
+  {
+    "id": "rarebooks:RB-99120004",
+    "collection_ssim": [
+      "Rare Books, Baillieu Library"
+    ],
+    "format_ssim": [
+      "Manuscript"
+    ],
+    "title_tesim": [
+      "Illuminated Persian manuscript (Shahnameh fragment)"
+    ],
+    "creator_tesim": [
+      "Unknown"
+    ],
+    "creator_ssim": [
+      "Unknown"
+    ],
+    "date_ssim": [
+      "c. 1500s"
+    ],
+    "date_start_isi": 1500,
+    "date_end_isi": 1599,
+    "subject_ssim": [
+      "Persian manuscripts",
+      "Illumination",
+      "Epic poetry"
+    ],
+    "place_ssim": [
+      "Persia"
+    ],
+    "description_tesim": [
+      "Leaves from an illustrated Shahnameh, Middle Eastern manuscripts collection."
+    ],
+    "rights_ssim": [
+      "Public domain"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=RB-99120004",
+    "source_url_ss": "https://cat.lib.unimelb.edu.au/record/99120004",
+    "source_system_ss": "Library catalogue MARC (sample)",
+    "source_record_ss": "{\"mms_id\":\"99120004\",\"245a\":\"Shahnameh fragment\",\"264c\":\"[15--]\"}"
+  },
+  {
+    "id": "rarebooks:RB-99120005",
+    "collection_ssim": [
+      "Rare Books, Baillieu Library"
+    ],
+    "format_ssim": [
+      "Book"
+    ],
+    "title_tesim": [
+      "Handbook of the University of Melbourne"
+    ],
+    "creator_tesim": [
+      "University of Melbourne"
+    ],
+    "creator_ssim": [
+      "University of Melbourne"
+    ],
+    "date_ssim": [
+      "1856"
+    ],
+    "date_start_isi": 1856,
+    "date_end_isi": 1856,
+    "subject_ssim": [
+      "University of Melbourne - History",
+      "Higher education - Victoria"
+    ],
+    "place_ssim": [
+      "Melbourne"
+    ],
+    "publisher_ssim": [
+      "University of Melbourne"
+    ],
+    "description_tesim": [
+      "Early handbook listing regulations, staff and courses in the University's second year."
+    ],
+    "rights_ssim": [
+      "Public domain"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=RB-99120005",
+    "source_url_ss": "https://cat.lib.unimelb.edu.au/record/99120005",
+    "source_system_ss": "Library catalogue MARC (sample)",
+    "source_record_ss": "{\"mms_id\":\"99120005\",\"245a\":\"Handbook of the University of Melbourne\",\"110a\":\"University of Melbourne\",\"264a\":\"Melbourne\",\"264c\":\"1856\"}"
+  },
+  {
+    "id": "herbarium:MELU-D100234",
+    "collection_ssim": [
+      "University of Melbourne Herbarium"
+    ],
+    "format_ssim": [
+      "Specimen"
+    ],
+    "title_tesim": [
+      "Eucalyptus regnans - Dandenong Ranges, Victoria"
+    ],
+    "creator_tesim": [
+      "Mueller, Ferdinand von"
+    ],
+    "creator_ssim": [
+      "Mueller, Ferdinand von"
+    ],
+    "date_ssim": [
+      "1867"
+    ],
+    "date_start_isi": 1867,
+    "date_end_isi": 1867,
+    "subject_ssim": [
+      "Myrtaceae",
+      "Plantae"
+    ],
+    "place_ssim": [
+      "Dandenong Ranges, Victoria"
+    ],
+    "scientific_name_ssim": [
+      "Eucalyptus regnans"
+    ],
+    "family_ssim": [
+      "Myrtaceae"
+    ],
+    "description_tesim": [
+      "Pressed specimen of mountain ash with collector's field label. Type status: none."
+    ],
+    "rights_ssim": [
+      "CC-BY"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=MELU-D100234",
+    "source_url_ss": "https://biocache.ala.org.au/occurrences/MELU-D100234",
+    "source_system_ss": "Herbarium Darwin Core (sample)",
+    "source_record_ss": "{\"catalogNumber\":\"MELU-D100234\",\"scientificName\":\"Eucalyptus regnans\",\"family\":\"Myrtaceae\",\"recordedBy\":\"Mueller, Ferdinand von\",\"eventDate\":\"1867\",\"locality\":\"Dandenong Ranges\",\"stateProvince\":\"Victoria\",\"basisOfRecord\":\"PreservedSpecimen\"}"
+  },
+  {
+    "id": "herbarium:MELU-D100891",
+    "collection_ssim": [
+      "University of Melbourne Herbarium"
+    ],
+    "format_ssim": [
+      "Specimen"
+    ],
+    "title_tesim": [
+      "Banksia marginata - Wilsons Promontory, Victoria"
+    ],
+    "creator_tesim": [
+      "Tilden, Josephine"
+    ],
+    "creator_ssim": [
+      "Tilden, Josephine"
+    ],
+    "date_ssim": [
+      "1910"
+    ],
+    "date_start_isi": 1910,
+    "date_end_isi": 1910,
+    "subject_ssim": [
+      "Proteaceae",
+      "Plantae"
+    ],
+    "place_ssim": [
+      "Wilsons Promontory, Victoria"
+    ],
+    "scientific_name_ssim": [
+      "Banksia marginata"
+    ],
+    "family_ssim": [
+      "Proteaceae"
+    ],
+    "description_tesim": [
+      "Silver banksia specimen from the Tilden South Pacific Plants collection."
+    ],
+    "rights_ssim": [
+      "CC-BY"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=MELU-D100891",
+    "source_url_ss": "https://biocache.ala.org.au/occurrences/MELU-D100891",
+    "source_system_ss": "Herbarium Darwin Core (sample)",
+    "source_record_ss": "{\"catalogNumber\":\"MELU-D100891\",\"scientificName\":\"Banksia marginata\",\"family\":\"Proteaceae\",\"recordedBy\":\"Tilden, Josephine\",\"eventDate\":\"1910\",\"locality\":\"Wilsons Promontory\",\"stateProvince\":\"Victoria\"}"
+  },
+  {
+    "id": "herbarium:MELU-F002310",
+    "collection_ssim": [
+      "University of Melbourne Herbarium"
+    ],
+    "format_ssim": [
+      "Specimen"
+    ],
+    "title_tesim": [
+      "Amanita muscaria - Burnley, Victoria"
+    ],
+    "creator_tesim": [
+      "Chai, Sophine"
+    ],
+    "creator_ssim": [
+      "Chai, Sophine"
+    ],
+    "date_ssim": [
+      "2008"
+    ],
+    "date_start_isi": 2008,
+    "date_end_isi": 2008,
+    "subject_ssim": [
+      "Amanitaceae",
+      "Fungi"
+    ],
+    "place_ssim": [
+      "Burnley, Victoria"
+    ],
+    "scientific_name_ssim": [
+      "Amanita muscaria"
+    ],
+    "family_ssim": [
+      "Amanitaceae"
+    ],
+    "description_tesim": [
+      "Fly agaric fungal specimen collected on the Burnley campus."
+    ],
+    "rights_ssim": [
+      "CC-BY"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=MELU-F002310",
+    "source_url_ss": "https://biocache.ala.org.au/occurrences/MELU-F002310",
+    "source_system_ss": "Herbarium Darwin Core (sample)",
+    "source_record_ss": "{\"catalogNumber\":\"MELU-F002310\",\"scientificName\":\"Amanita muscaria\",\"family\":\"Amanitaceae\",\"kingdom\":\"Fungi\",\"recordedBy\":\"Chai, Sophine\",\"eventDate\":\"2008\",\"locality\":\"Burnley\",\"stateProvince\":\"Victoria\"}"
+  },
+  {
+    "id": "herbarium:MELU-D200045",
+    "collection_ssim": [
+      "University of Melbourne Herbarium"
+    ],
+    "format_ssim": [
+      "Specimen"
+    ],
+    "title_tesim": [
+      "Acacia dealbata - Burnley, Victoria"
+    ],
+    "creator_tesim": [
+      "Burnley Horticultural College"
+    ],
+    "creator_ssim": [
+      "Burnley Horticultural College"
+    ],
+    "date_ssim": [
+      "1952"
+    ],
+    "date_start_isi": 1952,
+    "date_end_isi": 1952,
+    "subject_ssim": [
+      "Fabaceae",
+      "Plantae"
+    ],
+    "place_ssim": [
+      "Burnley, Victoria"
+    ],
+    "scientific_name_ssim": [
+      "Acacia dealbata"
+    ],
+    "family_ssim": [
+      "Fabaceae"
+    ],
+    "description_tesim": [
+      "Silver wattle from the former Burnley Horticultural College teaching herbarium, donated 2007."
+    ],
+    "rights_ssim": [
+      "CC-BY"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=MELU-D200045",
+    "source_url_ss": "https://biocache.ala.org.au/occurrences/MELU-D200045",
+    "source_system_ss": "Herbarium Darwin Core (sample)",
+    "source_record_ss": "{\"catalogNumber\":\"MELU-D200045\",\"scientificName\":\"Acacia dealbata\",\"family\":\"Fabaceae\",\"recordedBy\":\"Burnley Horticultural College\",\"eventDate\":\"1952\",\"locality\":\"Burnley\",\"stateProvince\":\"Victoria\"}"
+  },
+  {
+    "id": "herbarium:MELU-D300112",
+    "collection_ssim": [
+      "University of Melbourne Herbarium"
+    ],
+    "format_ssim": [
+      "Specimen"
+    ],
+    "title_tesim": [
+      "Xanthorrhoea australis - Grampians, Victoria"
+    ],
+    "creator_tesim": [
+      "Unknown"
+    ],
+    "creator_ssim": [
+      "Unknown"
+    ],
+    "date_ssim": [
+      "n.d."
+    ],
+    "subject_ssim": [
+      "Asphodelaceae",
+      "Plantae"
+    ],
+    "place_ssim": [
+      "Grampians, Victoria"
+    ],
+    "scientific_name_ssim": [
+      "Xanthorrhoea australis"
+    ],
+    "family_ssim": [
+      "Asphodelaceae"
+    ],
+    "description_tesim": [
+      "Grass tree specimen, collector and date not recorded on label."
+    ],
+    "rights_ssim": [
+      "CC-BY"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=MELU-D300112",
+    "source_url_ss": "https://biocache.ala.org.au/occurrences/MELU-D300112",
+    "source_system_ss": "Herbarium Darwin Core (sample)",
+    "source_record_ss": "{\"catalogNumber\":\"MELU-D300112\",\"scientificName\":\"Xanthorrhoea australis\",\"family\":\"Asphodelaceae\",\"recordedBy\":\"\",\"eventDate\":\"\",\"locality\":\"Grampians\",\"stateProvince\":\"Victoria\"}"
+  },
+  {
+    "id": "archives:UMA-2000.0042/1",
+    "collection_ssim": [
+      "University of Melbourne Archives"
+    ],
+    "format_ssim": [
+      "Minute book"
+    ],
+    "title_tesim": [
+      "Minutes of the University Council, vol. 1"
+    ],
+    "creator_tesim": [
+      "University of Melbourne Council"
+    ],
+    "creator_ssim": [
+      "University of Melbourne Council"
+    ],
+    "date_ssim": [
+      "1853-1860"
+    ],
+    "date_start_isi": 1853,
+    "date_end_isi": 1860,
+    "subject_ssim": [
+      "University of Melbourne - History",
+      "University governance"
+    ],
+    "place_ssim": [
+      "Melbourne"
+    ],
+    "reference_code_ss": "UMA-2000.0042/1",
+    "description_tesim": [
+      "First bound volume of Council minutes from the University's foundation."
+    ],
+    "rights_ssim": [
+      "Open"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=UMA-2000.0042",
+    "source_url_ss": "https://archives.unimelb.edu.au/item/2000.0042/1",
+    "source_system_ss": "Archives EAD (sample)",
+    "source_record_ss": "{\"reference_code\":\"2000.0042/1\",\"level\":\"item\",\"parent\":\"2000.0042 University Council records\",\"unittitle\":\"Minutes, vol. 1\",\"unitdate\":\"1853-1860\",\"origination\":\"University of Melbourne Council\",\"accessrestrict\":\"Open\"}"
+  },
+  {
+    "id": "archives:UMA-1979.0128/7",
+    "collection_ssim": [
+      "University of Melbourne Archives"
+    ],
+    "format_ssim": [
+      "Correspondence"
+    ],
+    "title_tesim": [
+      "Percy Grainger correspondence with the Conservatorium"
+    ],
+    "creator_tesim": [
+      "Faculty of Music",
+      "Grainger, Percy"
+    ],
+    "creator_ssim": [
+      "Faculty of Music",
+      "Grainger, Percy"
+    ],
+    "date_ssim": [
+      "1934-1938"
+    ],
+    "date_start_isi": 1934,
+    "date_end_isi": 1938,
+    "subject_ssim": [
+      "Music education",
+      "Grainger Museum - Establishment"
+    ],
+    "place_ssim": [
+      "Melbourne"
+    ],
+    "reference_code_ss": "UMA-1979.0128/7",
+    "description_tesim": [
+      "Letters between Grainger and the University Conservatorium concerning the founding of the Grainger Museum."
+    ],
+    "rights_ssim": [
+      "Open"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=UMA-1979.0128",
+    "source_url_ss": "https://archives.unimelb.edu.au/item/1979.0128/7",
+    "source_system_ss": "Archives EAD (sample)",
+    "source_record_ss": "{\"reference_code\":\"1979.0128/7\",\"level\":\"file\",\"parent\":\"1979.0128 Faculty of Music records\",\"unittitle\":\"Correspondence - Percy Grainger\",\"unitdate\":\"1934-1938\",\"origination\":\"Faculty of Music\",\"accessrestrict\":\"Open\"}"
+  },
+  {
+    "id": "archives:UMA-1988.0013/3",
+    "collection_ssim": [
+      "University of Melbourne Archives"
+    ],
+    "format_ssim": [
+      "Register"
+    ],
+    "title_tesim": [
+      "Student enrolment register, Faculty of Medicine"
+    ],
+    "creator_tesim": [
+      "Faculty of Medicine"
+    ],
+    "creator_ssim": [
+      "Faculty of Medicine"
+    ],
+    "date_ssim": [
+      "1862-1870"
+    ],
+    "date_start_isi": 1862,
+    "date_end_isi": 1870,
+    "subject_ssim": [
+      "Medical education",
+      "Students - Records"
+    ],
+    "place_ssim": [
+      "Melbourne"
+    ],
+    "reference_code_ss": "UMA-1988.0013/3",
+    "description_tesim": [
+      "Register of the first medical students enrolled at the University."
+    ],
+    "rights_ssim": [
+      "Open"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=UMA-1988.0013",
+    "source_url_ss": "https://archives.unimelb.edu.au/item/1988.0013/3",
+    "source_system_ss": "Archives EAD (sample)",
+    "source_record_ss": "{\"reference_code\":\"1988.0013/3\",\"level\":\"item\",\"parent\":\"1988.0013 Faculty of Medicine records\",\"unittitle\":\"Enrolment register\",\"unitdate\":\"1862-1870\",\"origination\":\"Faculty of Medicine\",\"accessrestrict\":\"Open\"}"
+  },
+  {
+    "id": "archives:UMA-2015.0071/2",
+    "collection_ssim": [
+      "University of Melbourne Archives"
+    ],
+    "format_ssim": [
+      "Manuscript"
+    ],
+    "title_tesim": [
+      "Malcolm Fraser Collection: electoral speeches"
+    ],
+    "creator_tesim": [
+      "Fraser, Malcolm"
+    ],
+    "creator_ssim": [
+      "Fraser, Malcolm"
+    ],
+    "date_ssim": [
+      "1975-1983"
+    ],
+    "date_start_isi": 1975,
+    "date_end_isi": 1983,
+    "subject_ssim": [
+      "Australian politics",
+      "Prime Ministers - Australia",
+      "Speeches"
+    ],
+    "place_ssim": [
+      "Canberra",
+      "Melbourne"
+    ],
+    "reference_code_ss": "UMA-2015.0071/2",
+    "description_tesim": [
+      "Typescript speeches from federal election campaigns, part of the Malcolm Fraser Collection."
+    ],
+    "rights_ssim": [
+      "Open"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=UMA-2015.0071",
+    "source_url_ss": "https://archives.unimelb.edu.au/item/2015.0071/2",
+    "source_system_ss": "Archives EAD (sample)",
+    "source_record_ss": "{\"reference_code\":\"2015.0071/2\",\"level\":\"file\",\"parent\":\"2015.0071 Malcolm Fraser Collection\",\"unittitle\":\"Electoral speeches\",\"unitdate\":\"1975-1983\",\"origination\":\"Fraser, Malcolm\",\"accessrestrict\":\"Open\"}"
+  },
+  {
+    "id": "archives:UMA-1995.0044/9",
+    "collection_ssim": [
+      "University of Melbourne Archives"
+    ],
+    "format_ssim": [
+      "Personnel file"
+    ],
+    "title_tesim": [
+      "Staff personnel file (restricted)"
+    ],
+    "creator_tesim": [
+      "Registrar's Office"
+    ],
+    "creator_ssim": [
+      "Registrar's Office"
+    ],
+    "date_ssim": [
+      "1948-1961"
+    ],
+    "date_start_isi": 1948,
+    "date_end_isi": 1961,
+    "subject_ssim": [
+      "Staff - Records"
+    ],
+    "place_ssim": [
+      "Melbourne"
+    ],
+    "reference_code_ss": "UMA-1995.0044/9",
+    "description_tesim": [
+      "Personnel file. Closed under the University's records access policy."
+    ],
+    "rights_ssim": [
+      "Restricted - closed until 2041"
+    ],
+    "thumbnail_ss": "https://placehold.co/300x300?text=Restricted",
+    "source_url_ss": "https://archives.unimelb.edu.au/item/1995.0044/9",
+    "source_system_ss": "Archives EAD (sample)",
+    "source_record_ss": "{\"reference_code\":\"1995.0044/9\",\"level\":\"item\",\"parent\":\"1995.0044 Registrar's Office records\",\"unittitle\":\"Personnel file\",\"unitdate\":\"1948-1961\",\"origination\":\"Registrar's Office\",\"accessrestrict\":\"Closed until 2041\"}"
+  }
+]
