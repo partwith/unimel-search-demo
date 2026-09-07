@@ -8,14 +8,20 @@ class HarvestCollectionJob < ApplicationJob
       cursor_from: full ? nil : (source.cursor ? source.cursor - 1.hour : nil)
     )
 
-    harvester = Nexus::Harvesters.for(source)
     mapper = source.mapper.constantize.new
+    harvester = Nexus::Harvesters.for(source, mapper)
     indexer = Nexus::Indexer.new(collection: source.key)
 
     error_samples = []
     fetched = 0
     indexed = 0
-    indexed_ids = []
+    # The current full set of Solr ids known to still exist upstream this
+    # run -- both successfully (re-)indexed records AND records that merely
+    # failed to *map* this run (see the rescue branch below). A record isn't
+    # "gone" just because this run's mapping choked on it; only the harvester
+    # saying it's deleted, or a full sweep finding it absent entirely, means
+    # that.
+    current_ids = []
 
     harvester.each(from: run.cursor_from) do |raw|
       fetched += 1
@@ -23,24 +29,31 @@ class HarvestCollectionJob < ApplicationJob
         doc = mapper.call(raw)
         indexer.add(doc)
         indexed += 1
-        indexed_ids << doc[:id]
+        current_ids << doc[:id]
       rescue Nexus::MappingError => e
         error_samples << { "id" => raw.id, "message" => e.message } if error_samples.size < 20
+        # Preserve this id in the full set even though mapping failed: it may
+        # still be validly indexed from a previous successful run, and a
+        # transient mapping failure must not read as "upstream deleted this"
+        # to the reconciler below (which would otherwise delete a good,
+        # previously-indexed document).
+        current_ids << mapper.id_for(raw.id)
       end
     end
     indexer.commit
 
-    # full_id_set has to be in Solr id space ("grainger:GM-0417"), not the
-    # harvester's raw upstream identifier space ("oai:grainger.unimelb.edu.au:
-    # GM-0417") that harvester.all_ids returns -- Reconciler#fetch_existing_ids
-    # compares against Solr ids, so passing raw identifiers here would make
-    # every record look orphaned and wipe out the run's own indexing. A full
-    # run already re-fetches every non-deleted upstream record (cursor_from is
-    # nil), so the ids this run successfully mapped and indexed are exactly
-    # the current full set.
+    # full_id_set and the explicit deleted ids both have to be in Solr id
+    # space ("grainger:GM-0417"), not the harvester's raw upstream identifier
+    # space ("oai:grainger.unimelb.edu.au:GM-0417") -- Reconciler compares
+    # full_id_set against Solr ids fetched from Solr itself, and passes the
+    # deleted ids straight to Solr's delete_by_id (a silent no-op against ids
+    # that don't exist). Nexus::Harvesters::OaiPmh#deleted_ids already
+    # translates via the mapper for this reason. A full run re-fetches every
+    # non-deleted upstream record (cursor_from is nil), so current_ids is
+    # exactly the current full set.
     deleted = Nexus::Reconciler.new(source).apply(
       harvester.deleted_ids(from: run.cursor_from),
-      full_id_set: full ? indexed_ids : nil
+      full_id_set: full ? current_ids : nil
     )
 
     run.update!(

@@ -3,11 +3,12 @@ require "oai"
 module Nexus
   module Harvesters
     class OaiPmh < Base
-      def initialize(source)
+      def initialize(source, mapper)
         @client = OAI::Client.new(source.config["base_url"])
         @set = source.config["set"]
         @prefix = source.config["metadata_prefix"]
         @until = Time.now.utc
+        @mapper = mapper
       end
 
       def each(from:)
@@ -19,9 +20,14 @@ module Nexus
         end
       end
 
+      # Returns Solr document ids (the mapper's id space, e.g.
+      # "grainger:GM-9999"), not raw OAI identifier URIs -- Reconciler passes
+      # these straight to Solr's delete_by_id, which is a silent no-op
+      # against ids that don't exist, so returning raw OAI identifiers here
+      # would make incremental deletes never actually take effect.
       def deleted_ids(from:)
         opts = list_opts(from)
-        @client.list_identifiers(opts).full.select(&:deleted?).map(&:identifier)
+        @client.list_identifiers(opts).full.select(&:deleted?).map { |i| @mapper.id_for(i.identifier) }
       end
 
       def all_ids

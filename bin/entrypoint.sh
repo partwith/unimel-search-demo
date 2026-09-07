@@ -52,8 +52,13 @@ fi
 ruby /app/upstream/app.rb -p 4567 -o 127.0.0.1 &
 UPSTREAM_PID=$!
 
+# db:prepare (create-or-migrate) runs every boot, not just the first --
+# it's idempotent, and gating it behind the seed sentinel would silently
+# skip a new migration on a redeploy against an existing Fly volume. Only
+# the actual seeding (which would duplicate data) is first-boot-only.
+bin/rails db:prepare
+
 if [ ! -f /data/.seeded ]; then
-  bin/rails db:prepare
   bin/rails db:seed
   ruby bin/seed_static.rb
   touch /data/.seeded

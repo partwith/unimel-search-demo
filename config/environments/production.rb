@@ -24,21 +24,20 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  config.assume_ssl = true
+  # Assume all access to the app is happening through a SSL-terminating reverse proxy
+  # (true on Fly, which terminates TLS at its edge). With assume_ssl on,
+  # request.base_url always reports "https://" -- fine in real production,
+  # where the browser's Origin header is genuinely "https://" too, but a
+  # mismatch (and a CSRF-rejecting 422 on every POST) if this same image is
+  # ever reached directly over plain HTTP with no proxy in front, e.g. the
+  # local Docker verification flow in bin/entrypoint.sh's Dockerfile. Default
+  # stays true (real deployment's posture); pass -e ASSUME_SSL=false -e
+  # FORCE_SSL=false to `docker run` for that local, no-proxy scenario instead
+  # of weakening the check for everyone.
+  config.assume_ssl = ENV["ASSUME_SSL"] != "false"
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
-
-  # With assume_ssl on, request.base_url always reports "https://", even when
-  # this single-container demo is reached directly over plain HTTP (e.g. the
-  # local Docker verification flow in bin/entrypoint.sh's Dockerfile, with no
-  # SSL-terminating proxy in front). Behind Fly's real HTTPS edge the browser's
-  # Origin header is genuinely "https://", so it matches base_url and this
-  # check would pass anyway -- it only ever rejects requests in the assumed-
-  # but-not-actually-SSL local case. Token-based forgery protection (the
-  # default `protect_from_forgery`) still fully applies either way.
-  config.action_controller.forgery_protection_origin_check = false
+  config.force_ssl = ENV["FORCE_SSL"] != "false"
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }

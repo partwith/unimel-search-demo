@@ -7,7 +7,8 @@ RSpec.describe Nexus::Harvesters::OaiPmh do
       config: { "base_url" => "http://upstream.test/oai", "set" => "grainger", "metadata_prefix" => "oai_dc" }
     )
   end
-  let(:harvester) { described_class.new(source) }
+  let(:mapper) { Nexus::Mappers::GraingerOaiDc.new }
+  let(:harvester) { described_class.new(source, mapper) }
 
   let(:page1) do
     <<~XML
@@ -68,6 +69,17 @@ RSpec.describe Nexus::Harvesters::OaiPmh do
     expect(yielded.first.id).to eq("oai:grainger.unimelb.edu.au:GM-0417")
   end
 
+  # Regression test: OAI::Client::Record#metadata is the <metadata> wrapper
+  # element itself, not the <oai_dc:dc> element inside it. DublinCore.parse
+  # needs the latter as its root, or every field comes back empty.
+  it "yields metadata that DublinCore can parse into actual Dublin Core fields" do
+    yielded = []
+    harvester.each(from: nil) { |raw| yielded << raw }
+
+    dc = Nexus::DublinCore.parse(yielded.first.metadata)
+    expect(dc["title"]).to eq(["Free Music Machine, model 2"])
+  end
+
   # ListIdentifiers responses expose bare <header> elements as direct children
   # of <ListIdentifiers>, unlike ListRecords which wraps each <header> in a
   # <record>. So reusing page1/page2 needs both the container tag renamed and
@@ -87,5 +99,17 @@ RSpec.describe Nexus::Harvesters::OaiPmh do
     )
 
     expect(harvester.all_ids).to eq(["oai:grainger.unimelb.edu.au:GM-0417"])
+  end
+
+  # Regression test: deleted_ids must return Solr document ids, not raw OAI
+  # identifier URIs -- Reconciler passes these straight to Solr's
+  # delete_by_id, which silently no-ops against ids that don't exist.
+  it "translates deleted identifiers into Solr id space via the mapper" do
+    stub_request(:get, /upstream\.test\/oai/).with(query: hash_including(verb: "ListIdentifiers")).to_return(
+      { body: as_list_identifiers(page1).sub(%r{<metadata>.*</metadata>\n}m, ""), headers: { "Content-Type" => "text/xml" } },
+      { body: as_list_identifiers(page2), headers: { "Content-Type" => "text/xml" } }
+    )
+
+    expect(harvester.deleted_ids(from: nil)).to eq(["grainger:GM-9999"])
   end
 end
