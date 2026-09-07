@@ -14,6 +14,13 @@ class CatalogController < ApplicationController
   configure_blacklight do |config|
     config.default_solr_params = { rows: 10 }
 
+    # SearchBuilder#hide_restricted reads staff_view from blacklight_params
+    # (see app/models/search_builder.rb), but Blacklight's SearchState
+    # strips any request parameter not listed here by default
+    # (filter_search_state_fields: true) -- without this, ?staff_view=1
+    # is silently dropped before the search builder ever sees it.
+    config.search_state_fields += [:staff_view]
+
     config.index.title_field = "title_tesim"
     config.index.thumbnail_field = "thumbnail_ss"
     config.index.display_type_field = "format_ssim"

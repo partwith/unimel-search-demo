@@ -80,9 +80,21 @@ module NexusUpstream
       records, token, total, cursor = paginate(filtered_records)
       envelope("ListIdentifiers") do |xml|
         xml.ListIdentifiers do
-          records.each { |r| xml.header { header_fields(xml, r) } }
+          records.each { |r| identifier_header(xml, r) }
           xml.resumptionToken(token, completeListSize: total, cursor: cursor)
         end
+      end
+    end
+
+    # Mirrors record_body's deleted-vs-live branching: ListIdentifiers must
+    # mark deleted records with status="deleted" the same way ListRecords
+    # does, or Nexus::Harvesters::OaiPmh#deleted_ids (which reads this verb)
+    # never sees any record as deleted.
+    def identifier_header(xml, record)
+      if record["deleted"]
+        xml.header(status: "deleted") { header_fields(xml, record) }
+      else
+        xml.header { header_fields(xml, record) }
       end
     end
 
