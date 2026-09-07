@@ -30,6 +30,16 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
 
+  # With assume_ssl on, request.base_url always reports "https://", even when
+  # this single-container demo is reached directly over plain HTTP (e.g. the
+  # local Docker verification flow in bin/entrypoint.sh's Dockerfile, with no
+  # SSL-terminating proxy in front). Behind Fly's real HTTPS edge the browser's
+  # Origin header is genuinely "https://", so it matches base_url and this
+  # check would pass anyway -- it only ever rejects requests in the assumed-
+  # but-not-actually-SSL local case. Token-based forgery protection (the
+  # default `protect_from_forgery`) still fully applies either way.
+  config.action_controller.forgery_protection_origin_check = false
+
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 

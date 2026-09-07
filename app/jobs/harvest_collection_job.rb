@@ -15,21 +15,32 @@ class HarvestCollectionJob < ApplicationJob
     error_samples = []
     fetched = 0
     indexed = 0
+    indexed_ids = []
 
     harvester.each(from: run.cursor_from) do |raw|
       fetched += 1
       begin
-        indexer.add(mapper.call(raw))
+        doc = mapper.call(raw)
+        indexer.add(doc)
         indexed += 1
+        indexed_ids << doc[:id]
       rescue Nexus::MappingError => e
         error_samples << { "id" => raw.id, "message" => e.message } if error_samples.size < 20
       end
     end
     indexer.commit
 
+    # full_id_set has to be in Solr id space ("grainger:GM-0417"), not the
+    # harvester's raw upstream identifier space ("oai:grainger.unimelb.edu.au:
+    # GM-0417") that harvester.all_ids returns -- Reconciler#fetch_existing_ids
+    # compares against Solr ids, so passing raw identifiers here would make
+    # every record look orphaned and wipe out the run's own indexing. A full
+    # run already re-fetches every non-deleted upstream record (cursor_from is
+    # nil), so the ids this run successfully mapped and indexed are exactly
+    # the current full set.
     deleted = Nexus::Reconciler.new(source).apply(
       harvester.deleted_ids(from: run.cursor_from),
-      full_id_set: full ? harvester.all_ids : nil
+      full_id_set: full ? indexed_ids : nil
     )
 
     run.update!(

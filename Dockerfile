@@ -1,72 +1,57 @@
-# syntax=docker/dockerfile:1
-# check=error=true
+FROM solr:9 AS solr-base
 
-# This Dockerfile is designed for production, not development. Use with Kamal or build'n'run by hand:
-# docker build -t nexus_fly_deploy .
-# docker run -d -p 80:80 -e RAILS_MASTER_KEY=<value from config/master.key> --name nexus_fly_deploy nexus_fly_deploy
+FROM ruby:3.3-slim
 
-# For a containerized dev environment, see Dev Containers: https://guides.rubyonrails.org/getting_started_with_devcontainer.html
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+      build-essential libyaml-dev sqlite3 libsqlite3-dev curl default-jre-headless procps \
+    && rm -rf /var/lib/apt/lists/*
 
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version
-ARG RUBY_VERSION=3.3.9
-FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
+# Bring over the Solr installation. The docker-solr helper scripts
+# (solr-precreate, precreate-core, init-var-solr) live under
+# /opt/solr/docker/scripts, and /etc/default/solr.in.sh (sourced by bin/solr)
+# lives outside /opt/solr entirely, so both need an explicit COPY.
+COPY --from=solr-base /opt/solr /opt/solr
+COPY --from=solr-base /etc/default/solr.in.sh /etc/default/solr.in.sh
 
-# Rails app lives here
-WORKDIR /rails
+# The official solr:9 image bundles its own JRE under /opt/java, which is
+# NOT part of /opt/solr and so isn't carried over by the COPY above --
+# install a JRE ourselves (default-jre-headless, above) and point Solr at it.
+ENV JAVA_HOME=/usr/lib/jvm/default-java
+ENV PATH="/opt/solr/bin:/opt/solr/docker/scripts:${JAVA_HOME}/bin:${PATH}"
 
-# Install base packages
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+# Replicate the environment the official solr:9 image sets up (normally done
+# by its own Dockerfile ENV instructions, which we don't inherit since we
+# only copied /opt/solr and one file out of it).
+ENV SOLR_HOME=/var/solr/data
+ENV SOLR_PID_DIR=/var/solr
+ENV SOLR_LOGS_DIR=/var/solr/logs
+ENV LOG4J_PROPS=/var/solr/log4j2.xml
+ENV SOLR_INCLUDE=/etc/default/solr.in.sh
+ENV SOLR_JETTY_HOST=0.0.0.0
+# Solr 9's experimental JVM Security Manager sandbox denies file access
+# through the /var/solr -> /data/solr symlink entrypoint.sh sets up (its
+# policy grants access by the literal /var/solr path, but permission checks
+# resolve the symlink to /data/solr first). Disable it for this demo.
+ENV SOLR_SECURITY_MANAGER_ENABLED=false
 
-# Set production environment
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development"
+ENV RAILS_ENV=production
 
-# Throw-away build stage to reduce size of final image
-FROM base AS build
+WORKDIR /app
 
-# Install packages needed to build gems
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libyaml-dev pkg-config && \
-    rm -rf /var/lib/apt/lists /var/cache/apt/archives
-
-# Install application gems
 COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+RUN bundle install --jobs 4
 
-# Copy application code
 COPY . .
+RUN mkdir -p /opt/solr/server/solr/configsets/nexus_config/conf \
+    && cp -r solr/conf/* /opt/solr/server/solr/configsets/nexus_config/conf/
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+# SECRET_KEY_BASE_DUMMY scopes a throwaway secret to this one build step only
+# (Rails' own supported mechanism for precompiling assets without real
+# credentials) so nothing sensitive ends up baked into the image; the real
+# secret is supplied via RAILS_MASTER_KEY at `docker run` time.
+RUN SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+EXPOSE 3000
+VOLUME /data
 
-
-
-
-# Final stage for app image
-FROM base
-
-# Copy built artifacts: gems, application
-COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
-COPY --from=build /rails /rails
-
-# Run and own only the runtime files as a non-root user for security
-RUN groupadd --system --gid 1000 rails && \
-    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER 1000:1000
-
-# Entrypoint prepares the database.
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
-# Start server via Thruster by default, this can be overwritten at runtime
-EXPOSE 80
-CMD ["./bin/thrust", "./bin/rails", "server"]
+ENTRYPOINT ["bin/entrypoint.sh"]
