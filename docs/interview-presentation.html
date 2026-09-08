@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Nexus Cross Collection Search — Interview Walkthrough</title>
+<style>
+  :root {
+    --ink: #1a1d23;
+    --muted: #5b6270;
+    --line: #e3e6ea;
+    --accent: #3355ee;
+    --accent-soft: #eef1fe;
+    --bg: #fbfbfc;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+  }
+  .wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 28px 96px;
+  }
+  header.hero {
+    margin-bottom: 48px;
+  }
+  header.hero .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  header.hero h1 {
+    font-size: 34px;
+    line-height: 1.15;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+  header.hero p.lede {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 62ch;
+    margin: 0;
+  }
+  .pitch {
+    background: var(--accent-soft);
+    border: 1px solid #d8ddfb;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 24px;
+    font-size: 15px;
+    color: #26305e;
+  }
+  .pitch strong { color: #1c2550; }
+
+  section { margin-top: 56px; }
+  section > h2 {
+    font-size: 22px;
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  section > p.section-sub {
+    color: var(--muted);
+    margin: 0 0 24px;
+    max-width: 68ch;
+    font-size: 15px;
+  }
+
+  .shot {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(20, 24, 33, 0.04);
+    margin-bottom: 28px;
+  }
+  .shot img {
+    display: block;
+    width: 100%;
+    border-bottom: 1px solid var(--line);
+  }
+  .shot .cap {
+    padding: 14px 18px;
+  }
+  .shot .cap .tag {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 3px 8px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+  }
+  .shot .cap h3 {
+    margin: 0 0 6px;
+    font-size: 16.5px;
+  }
+  .shot .cap p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 720px) {
+    .pair { grid-template-columns: 1fr; }
+  }
+
+  .talking-points {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 26px;
+  }
+  .talking-points ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+  .talking-points li {
+    margin-bottom: 10px;
+    font-size: 14.5px;
+  }
+  .talking-points li:last-child { margin-bottom: 0; }
+
+  .limits {
+    background: #fff9ec;
+    border: 1px solid #f1e2ba;
+    border-radius: 12px;
+    padding: 20px 24px;
+    font-size: 14.5px;
+    color: #5a4a1f;
+  }
+  .limits ul { margin: 10px 0 0; padding-left: 20px; }
+  .limits li { margin-bottom: 6px; }
+
+  .infobox {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    font-size: 14.5px;
+  }
+  .infobox h4 {
+    margin: 0 0 8px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+  }
+  .infobox p { margin: 0 0 10px; }
+  .infobox p:last-child { margin-bottom: 0; }
+  .infobox pre {
+    background: #f4f5f8;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 10px 0;
+    overflow-x: auto;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: #f0f1f5;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.92em;
+  }
+  .infobox pre code { background: none; padding: 0; }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 13px;
+  }
+  footer a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">University of Melbourne — Interview Demo</div>
+    <h1>Nexus Cross Collection Search</h1>
+    <p class="lede">
+      One search box over four University of Melbourne collections — Grainger Museum,
+      Rare Books (Baillieu Library), the Herbarium, and University Archives — each in a
+      different native metadata format, unified behind a single Blacklight + Solr schema.
+    </p>
+    <div class="pitch">
+      <strong>The thirty-second version:</strong> I built a small Blacklight prototype with
+      twenty sample records shaped like four of the University's collections, each in its
+      own metadata format. The interesting part is the mapping layer — four source shapes
+      into one Solr schema with collection, format, creator, place, date-range and access
+      facets — plus a live OAI-PMH sync pipeline: a mock upstream catalogue and a scheduled
+      Rails job that harvests it incrementally, with mapping errors counted rather than
+      fatal, and restricted records suppressed for anonymous users. A search for
+      &ldquo;Grainger&rdquo; returns museum objects <em>and</em> an Archives correspondence
+      file side by side — which is the whole point of the portal.
+    </div>
+  </header>
+
+  <section>
+    <h2>1. Cross-collection search</h2>
+    <p class="section-sub">
+      A single query against the unified index. Six results span two source collections —
+      Grainger Museum and University of Melbourne Archives — with no per-collection
+      searching required.
+    </p>
+    <div class="shot">
+      <img src="screenshots/02-cross-collection-search.png" alt="Search results for 'grainger' spanning Grainger Museum and University Archives">
+      <div class="cap">
+        <span class="tag">Search</span>
+        <h3>Query: &ldquo;grainger&rdquo;</h3>
+        <p>1&ndash;6 of 6 results. Items 1, 3, 4, 5, 6 are Grainger Museum objects; item 2 is
+          an Archives correspondence file — the cross-collection scenario the whole design
+          exists to demonstrate.</p>
+      </div>
+    </div>
+
+    <div class="shot">
+      <img src="screenshots/03-facet-narrowing.png" alt="Facet narrowing to Rare Books, Baillieu Library">
+      <div class="cap">
+        <span class="tag">Facets</span>
+        <h3>Collection facet: Rare Books, Baillieu Library</h3>
+        <p>The same facet set (Collection, Format, Creator, Place, Subject, Access, Date
+          range) applies uniformly across all four source formats, because every record was
+          mapped into the same unified schema at ingest time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Schema unification, made visible</h2>
+    <p class="section-sub">
+      Every item page shows the normalised fields the search runs against, plus the raw
+      source record and a link back to the (fictitious) home system — so the mapping layer
+      is never a black box.
+    </p>
+    <div class="shot">
+      <img src="screenshots/01-catalog-home.png" alt="Catalog home page">
+      <div class="cap">
+        <span class="tag">Home</span>
+        <h3>Catalog home</h3>
+        <p>A single search box over all four collections, unauthenticated, no per-collection
+          entry points.</p>
+      </div>
+    </div>
+    <div class="shot">
+      <img src="screenshots/04-item-detail-source-record.png" alt="Item detail page showing normalised fields, view-in-home-system link, and the raw OAI Dublin Core source record">
+      <div class="cap">
+        <span class="tag">Item page</span>
+        <h3>Free Music Machine, model 2 (Grainger Museum)</h3>
+        <p>Normalised fields (Creator, Date, Description, Subjects, Place, Access) at the
+          top; a <strong>&ldquo;View in home system&rdquo;</strong> link; and the raw
+          upstream <code>oai_dc:dc</code> record preserved verbatim under
+          <strong>&ldquo;Source record&rdquo;</strong> — nothing about the mapping is
+          hidden from the researcher.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Rights and access from day one</h2>
+    <p class="section-sub">
+      A restricted personnel file is indexed but suppressed for anonymous users via a
+      <code>SearchBuilder</code> filter — not left out of the index, just filtered out of
+      results by default. A <code>?staff_view=1</code> toggle demonstrates the "staff view".
+    </p>
+    <div class="pair">
+      <div class="shot">
+        <img src="screenshots/05-suppression-anonymous.png" alt="Search for personnel file returns no results for anonymous users">
+        <div class="cap">
+          <span class="tag">Anonymous</span>
+          <h3>Query: &ldquo;personnel file&rdquo;</h3>
+          <p>No results — the restricted record is filtered out by default.</p>
+        </div>
+      </div>
+      <div class="shot">
+        <img src="screenshots/06-suppression-staffview.png" alt="Same search with staff_view=1 reveals the restricted personnel file">
+        <div class="cap">
+          <span class="tag">Staff view</span>
+          <h3>Same query, <code>?staff_view=1</code></h3>
+          <p>The restricted staff personnel file (closed until 2041) becomes visible.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>4. The sync pipeline</h2>
+    <p class="section-sub">
+      A mock OAI-PMH upstream and a scheduled Rails job harvest the Grainger Museum
+      collection incrementally — same shape as a real integration: fetch, map, index,
+      reconcile deletes, log a structured event per run.
+    </p>
+
+    <div class="infobox">
+      <h4>Which direction does the sync run?</h4>
+      <p>
+        There is a scheduled job, but it only runs <strong>upstream &rarr; Solr</strong>.
+        Nothing ever writes back into the mock upstream automatically:
+      </p>
+      <pre><code># config/recurring.yml
+harvest_grainger:        # incremental, every 15 minutes
+  class: HarvestCollectionJob
+  args: ["grainger"]
+  schedule: every 15 minutes
+
+harvest_grainger_full:   # full re-index + orphan-delete safety net, once a day
+  class: HarvestCollectionJob
+  args: ["grainger", { full: true }]
+  schedule: every day at 3am</code></pre>
+      <p>
+        <code>HarvestCollectionJob</code> calls <code>Nexus::Harvesters::OaiPmh</code> to
+        fetch from the mock's OAI-PMH endpoint, maps each record through
+        <code>GraingerOaiDc</code> into the unified schema, indexes it into Solr, then runs
+        <code>Nexus::Reconciler</code> to apply deletes.
+      </p>
+      <p>
+        The mock upstream's own data only ever changes through the
+        <strong>Upstream records editor</strong> below (or a direct file edit) — never
+        through a background job. That's deliberate: the mock stands in for a real external
+        system the University doesn't control, and the whole point of the harvester is to
+        detect and react to changes made <em>there</em>, not to originate them. If a job
+        wrote back into the upstream automatically, the incremental-sync demo would have
+        nothing to actually demonstrate.
+      </p>
+      <p>
+        The live demo sequence: edit a title or tick <strong>Deleted</strong> in the
+        upstream editor &rarr; click <strong>Harvest now</strong> on the collection sources
+        page &rarr; the change (or removal) shows up in search on the next reload.
+      </p>
+    </div>
+
+    <div class="shot">
+      <img src="screenshots/07-admin-collection-sources.png" alt="Admin collection sources page with Harvest now and Full re-index buttons">
+      <div class="cap">
+        <span class="tag">Admin</span>
+        <h3>Collection sources</h3>
+        <p>One row per configured harvest source, with <strong>Harvest now</strong> and
+          <strong>Full re-index</strong> buttons — the demo trigger, no shell access
+          needed.</p>
+      </div>
+    </div>
+    <div class="shot">
+      <img src="screenshots/08-admin-harvest-runs.png" alt="Admin harvest runs page showing fetched, indexed, deleted, and mapping error counts">
+      <div class="cap">
+        <span class="tag">Admin</span>
+        <h3>Harvest run history</h3>
+        <p>Fetched 5 / indexed 5 / deleted 1 (the mock's tombstoned record) / mapping errors
+          0 — the same counts that get emitted as a structured JSON log line per run, the
+          event a log platform would alert on.</p>
+      </div>
+    </div>
+    <div class="shot">
+      <img src="screenshots/09-admin-upstream-records.png" alt="Admin upstream records editor listing the mock Grainger source records with editable titles and a deleted flag">
+      <div class="cap">
+        <span class="tag">Admin</span>
+        <h3>Upstream records editor (mock source)</h3>
+        <p>Edits a record's title or flips its <strong>Deleted</strong> flag directly in the
+          mock upstream — the next harvest picks up the change and syncs it into Solr,
+          demonstrating both update and delete propagation without touching a shell.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Talking points</h2>
+    <div class="talking-points">
+      <ul>
+        <li><strong>Mapping, not migration.</strong> Four source shapes (museum CSV,
+          MARC-derived, Darwin Core, EAD-ish) map into one Solr schema via per-collection
+          mapper classes with a shared interface — adding a fifth collection means one new
+          mapper and harvester, not a schema redesign.</li>
+        <li><strong>Relevance means something different for different searches.</strong> A
+          name search ("grainger") should recall across collections; a specific title
+          search ("terra australis flinders") should rank the exact item first. Both are
+          demonstrable in this build.</li>
+        <li><strong>Mapping errors don't abort a harvest.</strong> They're counted, sampled
+          (first 20), and surfaced on the admin page — the other records still land. This is
+          the same posture a production ingestion pipeline needs against messy upstream
+          data.</li>
+        <li><strong>Deletes come from two places.</strong> Explicit tombstones on
+          incremental runs, and a full id-set diff on a periodic full run as the safety net
+          for sources that don't reliably report deletes.</li>
+        <li><strong>Rights suppression is enforced at the search layer</strong> via a
+          <code>SearchBuilder</code> filter chain — the same place a real system would
+          plug in more complex embargo logic later.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Known limitations (deliberate, not oversights)</h2>
+    <div class="limits">
+      This is a two-day interview prototype, not a production system. Worth naming
+      proactively if asked "what would you do differently for real":
+      <ul>
+        <li>No authentication anywhere, including the admin area.</li>
+        <li>Restricted-record suppression is enforced only at the search layer, not on a
+          direct item-page fetch by id — a production system would enforce the same
+          predicate on every read path, not just search.</li>
+        <li>Single Fly.io Machine, SQLite, no high availability or failover.</li>
+        <li>Solr itself is not exposed outside the container — no independent access
+          control to demonstrate there.</li>
+        <li>The OAI-PMH upstream is a mock built for this demo, not a real integration with
+          any live collection-management system.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    Live demo: <a href="https://cross-collection-search.fly.dev">cross-collection-search.fly.dev</a>
+    &middot; Screenshots captured from a local run of the same codebase.
+  </footer>
+
+</div>
+</body>
+</html>
