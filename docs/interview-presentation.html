@@ -350,6 +350,46 @@ harvest_grainger_full:   # full re-index + orphan-delete safety net, once a day
       </p>
     </div>
 
+    <div class="infobox">
+      <h4>What if a source only gives you a CSV file, not an API?</h4>
+      <p>
+        Not every collection-management system speaks OAI-PMH — plenty of real-world
+        sources only offer a flat file (a CSV export dropped on a schedule, or emailed by a
+        collection owner). The harvester layer here is deliberately built to that case as a
+        first-class citizen, not an afterthought:
+      </p>
+      <pre><code># app/services/nexus/harvesters/base.rb — the entire contract
+class Base
+  def each(from:)        # yield a Nexus::RawRecord per new/changed record
+  def deleted_ids(from:) # return ids no longer present upstream
+end</code></pre>
+      <p>
+        <code>Nexus::Harvesters::OaiPmh</code> is one implementation of that contract, using
+        resumption tokens and OAI deletion headers. A <code>CsvFileHarvester</code> would be
+        a second implementation of the exact same two methods: read the file, diff each row
+        against what was seen last run (by a content hash or an <code>updated_at</code>
+        column if the export has one), yield the changed rows as <code>RawRecord</code>s,
+        and compute <code>deleted_ids</code> as "ids present last run, absent this run."
+      </p>
+      <p>
+        Nothing else in the pipeline would know the difference. <code>HarvestCollectionJob</code>,
+        the mapper, <code>Nexus::Indexer</code>, <code>Nexus::Reconciler</code>, and the
+        admin UI only ever talk to the harvester through that two-method interface — adding
+        a CSV source is a new harvester class, a new mapper for that format's fields, and
+        one config row (<code>CollectionSource#harvester = "csv_file"</code>). No changes to
+        the job, the reconciliation logic, or the schema.
+      </p>
+      <p>
+        This build only implements the OAI-PMH path end-to-end (Grainger); Rare Books,
+        Herbarium, and Archives are loaded once as static pre-mapped JSON rather than
+        wired to a second live harvester, since a two-day build has to pick one integration
+        to prove out completely rather than two half-finished ones. But the CSV-diff pattern
+        is exactly the second shape a real integration would need — most GLAM systems split
+        roughly evenly between "has an API" and "sends you a spreadsheet," and a harvester
+        abstraction that can't cleanly absorb the second case isn't actually reusable.
+      </p>
+    </div>
+
     <div class="shot">
       <img src="screenshots/07-admin-collection-sources.png" alt="Admin collection sources page with Harvest now and Full re-index buttons">
       <div class="cap">
