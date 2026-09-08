@@ -47,6 +47,7 @@ class CatalogController < ApplicationController
     config.add_show_field "reference_code_ss", label: "Reference code"
     config.add_show_field "rights_ssim", label: "Access"
     config.add_show_field "source_url_ss", label: "View in home system"
+    config.add_show_field "source_record_ss", label: "Source record"
 
     config.add_search_field("all_fields", label: "All fields") do |f|
       f.solr_parameters = {

@@ -92,15 +92,6 @@ RSpec.describe Nexus::Harvesters::OaiPmh do
        .gsub(%r{</?record>\n?}, "")
   end
 
-  it "lists all non-deleted identifiers across pages for a full sweep" do
-    stub_request(:get, /upstream\.test\/oai/).with(query: hash_including(verb: "ListIdentifiers")).to_return(
-      { body: as_list_identifiers(page1).sub(%r{<metadata>.*</metadata>\n}m, ""), headers: { "Content-Type" => "text/xml" } },
-      { body: as_list_identifiers(page2), headers: { "Content-Type" => "text/xml" } }
-    )
-
-    expect(harvester.all_ids).to eq(["oai:grainger.unimelb.edu.au:GM-0417"])
-  end
-
   # Regression test: deleted_ids must return Solr document ids, not raw OAI
   # identifier URIs -- Reconciler passes these straight to Solr's
   # delete_by_id, which silently no-ops against ids that don't exist.

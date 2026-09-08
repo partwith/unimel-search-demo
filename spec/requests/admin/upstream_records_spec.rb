@@ -31,4 +31,14 @@ RSpec.describe "Admin::UpstreamRecords", type: :request do
     store = NexusUpstreamStore.new(ENV["UPSTREAM_DATA_PATH"])
     expect(store.find("GM-1540")["deleted"]).to be true
   end
+
+  it "un-marks a record as deleted when the checkbox is unchecked" do
+    patch "/admin/upstream_records/GM-1540", params: { upstream_record: { deleted: "1" } }
+    store = NexusUpstreamStore.new(ENV["UPSTREAM_DATA_PATH"])
+    expect(store.find("GM-1540")["deleted"]).to be true
+
+    patch "/admin/upstream_records/GM-1540", params: { upstream_record: { deleted: "0" } }
+    store = NexusUpstreamStore.new(ENV["UPSTREAM_DATA_PATH"])
+    expect(store.find("GM-1540")["deleted"]).to be false
+  end
 end

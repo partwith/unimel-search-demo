@@ -51,9 +51,15 @@ class HarvestCollectionJob < ApplicationJob
     # translates via the mapper for this reason. A full run re-fetches every
     # non-deleted upstream record (cursor_from is nil), so current_ids is
     # exactly the current full set.
+    # An empty current_ids on a full run almost certainly means the upstream
+    # returned nothing usable (outage, corrupt response, misconfiguration) --
+    # not that the collection is genuinely now empty. Treating that as the
+    # full set here would make the reconciler below diff every existing Solr
+    # id against an empty set and delete the entire collection. Only pass a
+    # full_id_set when the run actually observed at least one current id.
     deleted = Nexus::Reconciler.new(source).apply(
       harvester.deleted_ids(from: run.cursor_from),
-      full_id_set: full ? current_ids : nil
+      full_id_set: (full && current_ids.any?) ? current_ids : nil
     )
 
     run.update!(

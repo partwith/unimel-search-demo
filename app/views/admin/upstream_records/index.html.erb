@@ -4,6 +4,7 @@
     <legend><%= record["id"] %></legend>
     <%= form_with url: admin_upstream_record_path(record["id"]), method: :patch do |f| %>
       <%= f.text_field :title, name: "upstream_record[title]", value: record["title"] %>
+      <%= hidden_field_tag "upstream_record[deleted]", "0" %>
       <label><%= check_box_tag "upstream_record[deleted]", "1", record["deleted"] %> Deleted</label>
       <%= f.submit "Save" %>
     <% end %>

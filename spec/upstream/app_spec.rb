@@ -38,5 +38,6 @@ RSpec.describe "Nexus upstream OAI-PMH mock" do
     get "/oai", verb: "ListIdentifiers", metadataPrefix: "oai_dc", from: "2026-09-02T00:00:00Z"
     expect(last_response.body.scan("<identifier>").size).to eq(1)
     expect(last_response.body).to include("GM-9999")
+    expect(last_response.body).to include('status="deleted"')
   end
 end

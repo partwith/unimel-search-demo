@@ -18,4 +18,8 @@ RSpec.describe CatalogController do
   it "sorts by relevance then date by default" do
     expect(config.sort_fields.keys.first).to eq("score desc, date_start_isi asc")
   end
+
+  it "preserves staff_view through Blacklight's search state filtering" do
+    expect(config.search_state_fields).to include(:staff_view)
+  end
 end
