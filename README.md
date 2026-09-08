@@ -9,6 +9,7 @@ an admin UI for triggering harvests and editing upstream state, and a
 single-container deploy to Fly.io.
 
 **Live demo:** https://cross-collection-search.fly.dev
+**Interview walkthrough (screenshots + talking points):** https://partwith.github.io/unimel-search-demo/interview-presentation.html
 
 ## Running locally
 
